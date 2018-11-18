@@ -5,7 +5,7 @@ import java.util.List;
 public class Submission {
     private int week;
     private int hours;
-    private List<Object> exercises;
+    private List<Integer> exercises;
     private String course;
 
     public void setWeek(int week) {
@@ -41,7 +41,7 @@ public class Submission {
 
     @Override
     public String toString() {
-        return course+", viikko "+week+" tehtyjä tehtäviä yhteensä " + exercises.size()+" aikaa kului "+ hours+ " tehdyt tehtävät: "+exercises;
+        return "tehtyjä tehtäviä yhteensä " + exercises.size()+" aikaa kului "+ hours+ " tehdyt tehtävät: "+exercises;
     }
     
 }

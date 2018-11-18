@@ -14,21 +14,30 @@ public class Main {
         }
 
         String url = "https://studies.cs.helsinki.fi/courses/students/"+studentNr+"/submissions";
+        String url2 = "https://studies.cs.helsinki.fi/courses/courseinfo";
 
         String bodyText = Request.Get(url).execute().returnContent().asString();
+        String bodyText2 = Request.Get(url2).execute().returnContent().asString();
 
         Gson mapper = new Gson();
         Submission[] subs = mapper.fromJson(bodyText, Submission[].class);
+        Course[] courses = mapper.fromJson(bodyText2, Course[].class);
         
         System.out.println("Opiskelijanumero: " + studentNr+"\n");
 
-        int allExercises = 0;
-        int allHours = 0;
         for (Submission submission : subs) {
-            System.out.println(submission);
-            allExercises+=submission.getExercises().size(); 
-            allHours+=submission.getHours();
+            for (Course course : courses) {
+                if (submission.getCourse().equals(course.getName())) {
+                    course.setSubmission(submission);
+                }
+            }
         }
-        System.out.println("yhteensä " +allExercises + " tehtävää ja " + allHours +" tuntia");
+
+        for (Course course : courses) {
+            if (!course.getSubmission().isEmpty()) {
+                System.out.println(course);
+            }
+        }
+
     }
 }
